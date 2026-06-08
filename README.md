@@ -16,7 +16,7 @@ Visual dark, inspirado em alquimia, magia e mistério.
 ## 🌐 Versão Online
 Você pode acessar diretamente o app hospedado no Streamlit Cloud:
 
-👉 ALCHEMISED – Cronograma de Leitura  
+👉 [https://cronograma-de-leitura-yon3obapljfjd9swvcdc2s.streamlit.app/]ALCHEMISED – Cronograma de Leitura  
 
 ---
 
