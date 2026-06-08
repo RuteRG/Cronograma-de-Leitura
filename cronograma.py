@@ -111,14 +111,7 @@ st.write(
 def add_page_with_bg(pdf, bg_path):
     pdf.add_page()
     pdf.image(bg_path, x=0, y=0, w=210, h=297)  # fundo em cada página
-    
-    # camada clara para contraste (cinza claro em vez de branco sólido)
-    pdf.set_fill_color(240, 240, 240)  # cinza bem claro
-    pdf.rect(10, 40, 190, 240, 'F')    # desenha retângulo preenchido
-    
-    # texto preto sobre camada clara
-    pdf.set_text_color(0, 0, 0)
-
+   
 
 
 pdf = FPDF()
