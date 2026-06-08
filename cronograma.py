@@ -130,7 +130,7 @@ st.write(
 img = Image.open("img/alchemised.png")
 enhancer = ImageEnhance.Brightness(img)
 img_light = enhancer.enhance(1.4)  # aumenta brilho em 40%
-img_light.save("img/alchemised_light.png")
+add_bg_from_local("img/alchemised_light.png")
 
 # =========================
 # PDF COM FUNDO
