@@ -119,11 +119,19 @@ def add_page_with_bg(pdf, bg_path):
     pdf.add_page()
     pdf.image(bg_path, x=0, y=0, w=210, h=297)  # fundo em cada página
     
-    # camada clara para suavizar a imagem
-    pdf.set_fill_color(255, 255, 255)  # branco
-    pdf.set_alpha(0.3)  # transparência (se estiver usando fpdf2)
-    pdf.rect(0, 0, 210, 297, 'F')
-    pdf.set_alpha(1)  # volta ao normal para o texto
+    from PIL import Image, ImageEnhance
+
+# abrir e clarear a imagem
+img = Image.open("img/alchemised.png")
+enhancer = ImageEnhance.Brightness(img)
+img_light = enhancer.enhance(1.3)  # aumenta brilho em 30%
+img_light.save("img/alchemised_light.png")
+
+# usar a versão clara no PDF
+def add_page_with_bg(pdf, bg_path="img/alchemised_light.png"):
+    pdf.add_page()
+    pdf.image(bg_path, x=0, y=0, w=210, h=297)
+
 
     pdf.set_font("Arial", "B", 14)
     pdf.set_text_color(255, 255, 255)  # branco para cabeçalho da tabela
