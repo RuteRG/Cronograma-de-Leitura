@@ -111,14 +111,7 @@ st.write(
 def add_page_with_bg(pdf, bg_path):
     pdf.add_page()
     pdf.image(bg_path, x=0, y=0, w=210, h=297)  # fundo em cada página
-    
-    # camada clara para contraste (cinza claro em vez de branco sólido)
-    pdf.set_fill_color(240, 240, 240)  # cinza bem claro
-    pdf.rect(10, 40, 190, 240, 'F')    # desenha retângulo preenchido
-    
-    # texto preto sobre camada clara
-    pdf.set_text_color(0, 0, 0)
-
+   
 
 
 pdf = FPDF()
@@ -127,25 +120,33 @@ pdf = FPDF()
 add_page_with_bg(pdf, "img/alchemised.png")
 pdf.set_y(60)
 pdf.set_font("Arial", "B", 20)
+pdf.set_text_color(200, 0, 0)  # vermelho escuro para o título
 pdf.cell(190, 12, "ALCHEMISED", ln=1, align="C")
-pdf.set_font("Arial", "", 14)
+
+pdf.set_font("Arial", "B", 14)
+pdf.set_text_color(255, 255, 255)  # branco para subtítulo
 pdf.cell(190, 10, "Cronograma de Leitura", ln=1, align="C")
 pdf.ln(10)
+
+pdf.set_text_color(255, 255, 255)  # branco para progresso geral
 pdf.cell(190, 10, f"Progresso Geral: {geral_concluidos}/{geral_total}", ln=1, align="C")
 
 # Partes
 for nome in partes.keys():
     add_page_with_bg(pdf, "img/alchemised.png")
     pdf.set_font("Arial", "B", 16)
+    pdf.set_text_color(255, 255, 255)  # branco para título da parte
     pdf.cell(190, 10, nome, ln=1, align="C")
     pdf.ln(5)
 
-    pdf.set_font("Arial", "B", 10)
+    pdf.set_font("Arial", "B", 16)
+    pdf.set_text_color(255, 255, 255)  # branco para cabeçalho da tabela
     pdf.cell(160, 10, "Leitura", border=1)
     pdf.cell(30, 10, "Status", border=1, align="C")
     pdf.ln()
 
-    pdf.set_font("Arial", "", 9)
+    pdf.set_font("Arial", "B", 14)
+    pdf.set_text_color(255, 255, 255)  # branco para conteúdo da tabela
     for _, row in st.session_state[f"df_{nome}"].iterrows():
         status = "[X]" if row["Concluído"] else "[ ]"
         pdf.cell(160, 8, str(row["Leitura"])[:75], border=1)
@@ -154,7 +155,8 @@ for nome in partes.keys():
 
 # Exportar PDF
 buffer = BytesIO()
-buffer.write(pdf.output(dest="S"))
+pdf_bytes = pdf.output(dest="S").encode("latin-1")  # converte para bytes
+buffer.write(pdf_bytes)
 buffer.seek(0)
 
 st.download_button(
