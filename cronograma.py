@@ -3,6 +3,7 @@ import pandas as pd
 from fpdf import FPDF
 from io import BytesIO
 import base64
+from PIL import Image, ImageEnhance   # <-- aqui
 
 st.set_page_config(page_title="Cronograma de Leitura - ALCHEMISED 🧠", layout="wide")
 
@@ -103,6 +104,12 @@ st.write(
     f"{geral_concluidos} de {geral_total} leituras concluídas "
     f"({(geral_concluidos/geral_total)*100:.1f}%)"
 )
+
+# abrir e clarear a imagem original
+img = Image.open("img/alchemised.png")
+enhancer = ImageEnhance.Brightness(img)
+img_light = enhancer.enhance(1.4)  # aumenta brilho em 40%
+img_light.save("img/alchemised_light.png")
 
 # =========================
 # PDF COM FUNDO + RETÂNGULO CLARO
