@@ -57,17 +57,30 @@ partes = {
 st.title("📚 Cronograma de Leitura - ALCHEMISED 🧠")
 
 # =========================
+# CARREGAR PROGRESSO SALVO
+# =========================
+if os.path.exists("progresso.csv"):
+    progresso_salvo = pd.read_csv("progresso.csv")
+else:
+    progresso_salvo = None
+
+# =========================
 # TABELAS INTERATIVAS
 # =========================
-
 for nome, leituras in partes.items():
     chave = f"df_{nome}"
 
     if chave not in st.session_state:
-        st.session_state[chave] = pd.DataFrame({
+        df_base = pd.DataFrame({
             "Leitura": leituras,
             "Concluído": [False] * len(leituras)
         })
+        # Se já existe progresso salvo, atualiza
+        if progresso_salvo is not None:
+            df_base = df_base.merge(progresso_salvo, on="Leitura", how="left")
+            df_base["Concluído"] = df_base["Concluído_y"].fillna(df_base["Concluído_x"])
+            df_base = df_base[["Leitura", "Concluído"]]
+        st.session_state[chave] = df_base
 
     st.subheader(nome)
 
@@ -87,13 +100,12 @@ for nome, leituras in partes.items():
     st.progress(percentual)
     st.write(f"{concluidos} de {total} leituras concluídas ({percentual*100:.1f}%)")
 
-    # Atualiza progresso salvo em CSV
+# Atualiza progresso salvo em CSV
 todos = pd.concat(
     [st.session_state[f"df_{nome}"] for nome in partes.keys()],
     ignore_index=True
 )
 todos.to_csv("progresso.csv", index=False)
-
 
 # =========================
 # PROGRESSO GERAL
@@ -114,20 +126,20 @@ st.write(
     f"({(geral_concluidos/geral_total)*100:.1f}%)"
 )
 
-# abrir e clarear a imagem original
+# =========================
+# CLAREAR FUNDO DA IMAGEM
+# =========================
 img = Image.open("img/alchemised.png")
 enhancer = ImageEnhance.Brightness(img)
 img_light = enhancer.enhance(1.4)  # aumenta brilho em 40%
 img_light.save("img/alchemised_light.png")
 
 # =========================
-# PDF COM FUNDO + RETÂNGULO CLARO
+# PDF COM FUNDO
 # =========================
-
 def add_page_with_bg(pdf, bg_path):
     pdf.add_page()
-    pdf.image(bg_path, x=0, y=0, w=210, h=297)  # fundo em cada página
-   
+    pdf.image(bg_path, x=0, y=0, w=210, h=297)
 
 
 pdf = FPDF()
