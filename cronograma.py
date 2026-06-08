@@ -114,20 +114,6 @@ def add_page_with_bg(pdf, bg_path):
 
 pdf = FPDF()
 
-# Capa
-add_page_with_bg(pdf, "img/alchemised.png")
-pdf.set_y(60)
-pdf.set_font("Arial", "B", 20)
-pdf.set_text_color(200, 0, 0)  # vermelho escuro
-pdf.cell(190, 12, "ALCHEMISED", ln=1, align="C")
-
-pdf.set_font("Arial", "", 14)
-pdf.set_text_color(50, 50, 50)  # cinza escuro
-pdf.cell(190, 10, "Cronograma de Leitura", ln=1, align="C")
-pdf.ln(10)
-
-pdf.set_text_color(0, 0, 0)  # preto
-pdf.cell(190, 10, f"Progresso Geral: {geral_concluidos}/{geral_total}", ln=1, align="C")
 
 # Partes
 for nome in partes.keys():
@@ -144,7 +130,7 @@ for nome in partes.keys():
     pdf.ln()
 
     pdf.set_font("Arial", "", 9)
-    pdf.set_text_color(0, 0, 0)  # preto para conteúdo
+    pdf.set_text_color(255, 255, 255)  # branco para o texto
     for _, row in st.session_state[f"df_{nome}"].iterrows():
         status = "[X]" if row["Concluído"] else "[ ]"
         pdf.cell(160, 8, str(row["Leitura"])[:75], border=1)
