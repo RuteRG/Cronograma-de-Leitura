@@ -123,13 +123,13 @@ for nome in partes.keys():
     pdf.cell(190, 10, nome, ln=1, align="C")
     pdf.ln(5)
 
-    pdf.set_font("Arial", "B", 10)
+    pdf.set_font("Arial", "B", 14)
     pdf.set_text_color(255, 255, 255)  # branco para cabeçalho da tabela
     pdf.cell(160, 10, "Leitura", border=1)
     pdf.cell(30, 10, "Status", border=1, align="C")
     pdf.ln()
 
-    pdf.set_font("Arial", "", 9)
+    pdf.set_font("Arial", "B", 12)
     pdf.set_text_color(255, 255, 255)  # branco para o texto
     for _, row in st.session_state[f"df_{nome}"].iterrows():
         status = "[X]" if row["Concluído"] else "[ ]"
