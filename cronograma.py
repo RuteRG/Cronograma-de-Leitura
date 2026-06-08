@@ -4,6 +4,7 @@ from fpdf import FPDF
 from io import BytesIO
 import base64
 from PIL import Image, ImageEnhance   # <-- aqui
+import os
 
 st.set_page_config(page_title="Cronograma de Leitura - ALCHEMISED 🧠", layout="wide")
 
@@ -86,6 +87,14 @@ for nome, leituras in partes.items():
     st.progress(percentual)
     st.write(f"{concluidos} de {total} leituras concluídas ({percentual*100:.1f}%)")
 
+    # Atualiza progresso salvo em CSV
+todos = pd.concat(
+    [st.session_state[f"df_{nome}"] for nome in partes.keys()],
+    ignore_index=True
+)
+todos.to_csv("progresso.csv", index=False)
+
+
 # =========================
 # PROGRESSO GERAL
 # =========================
@@ -159,6 +168,12 @@ for nome in partes.keys():
         pdf.cell(160, 8, str(row["Leitura"])[:75], border=1)
         pdf.cell(30, 8, status, border=1, align="C")
         pdf.ln()
+
+# Carregar progresso salvo
+if os.path.exists("progresso.csv"):
+    todos_salvos = pd.read_csv("progresso.csv")
+else:
+    todos_salvos = None
 
 # Exportar PDF
 buffer = BytesIO()
