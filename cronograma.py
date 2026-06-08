@@ -3,7 +3,7 @@ import pandas as pd
 from fpdf import FPDF
 from io import BytesIO
 import base64
-from PIL import Image, ImageEnhance
+from PIL import Image, ImageEnhance   # <-- aqui
 import os
 
 st.set_page_config(page_title="Cronograma de Leitura - ALCHEMISED 🧠", layout="wide")
@@ -57,15 +57,6 @@ partes = {
 st.title("📚 Cronograma de Leitura - ALCHEMISED 🧠")
 
 # =========================
-# CARREGAR PROGRESSO SALVO
-# =========================
-
-if os.path.exists("progresso.csv"):
-    progresso_salvo = pd.read_csv("progresso.csv")
-else:
-    progresso_salvo = None
-
-# =========================
 # TABELAS INTERATIVAS
 # =========================
 
@@ -73,23 +64,17 @@ for nome, leituras in partes.items():
     chave = f"df_{nome}"
 
     if chave not in st.session_state:
-        df_base = pd.DataFrame({
+        st.session_state[chave] = pd.DataFrame({
             "Leitura": leituras,
             "Concluído": [False] * len(leituras)
         })
-        # Se já existe progresso salvo, atualiza
-        if progresso_salvo is not None:
-            df_base = df_base.merge(progresso_salvo, on="Leitura", how="left")
-            df_base["Concluído"] = df_base["Concluído_y"].fillna(df_base["Concluído_x"])
-            df_base = df_base[["Leitura", "Concluído"]]
-        st.session_state[chave] = df_base
 
     st.subheader(nome)
 
     df = st.data_editor(
         st.session_state[chave],
         hide_index=True,
-        width="stretch",  # substitui use_container_width
+        use_container_width=True,
         key=f"editor_{nome}"
     )
 
@@ -102,16 +87,22 @@ for nome, leituras in partes.items():
     st.progress(percentual)
     st.write(f"{concluidos} de {total} leituras concluídas ({percentual*100:.1f}%)")
 
-# Atualiza progresso salvo em CSV
+    # Atualiza progresso salvo em CSV
 todos = pd.concat(
     [st.session_state[f"df_{nome}"] for nome in partes.keys()],
     ignore_index=True
 )
 todos.to_csv("progresso.csv", index=False)
 
+
 # =========================
 # PROGRESSO GERAL
 # =========================
+
+todos = pd.concat(
+    [st.session_state[f"df_{nome}"] for nome in partes.keys()],
+    ignore_index=True
+)
 
 geral_concluidos = int(todos["Concluído"].sum())
 geral_total = len(todos)
@@ -123,63 +114,70 @@ st.write(
     f"({(geral_concluidos/geral_total)*100:.1f}%)"
 )
 
-# =========================
-# CLAREAR FUNDO DA IMAGEM
-# =========================
-
+# abrir e clarear a imagem original
 img = Image.open("img/alchemised.png")
 enhancer = ImageEnhance.Brightness(img)
 img_light = enhancer.enhance(1.4)  # aumenta brilho em 40%
-add_bg_from_local("img/alchemised_light.png")
+img_light.save("img/alchemised_light.png")
 
 # =========================
-# PDF COM FUNDO
+# PDF COM FUNDO + RETÂNGULO CLARO
 # =========================
 
-def add_page_with_bg(pdf, bg_path="img/alchemised_light.png"):
+def add_page_with_bg(pdf, bg_path):
     pdf.add_page()
-    pdf.image(bg_path, x=0, y=0, w=210, h=297)
+    pdf.image(bg_path, x=0, y=0, w=210, h=297)  # fundo em cada página
+   
+
 
 pdf = FPDF()
 
 # Capa
-add_page_with_bg(pdf)
+add_page_with_bg(pdf, "img/alchemised.png")
 pdf.set_y(60)
 pdf.set_font("Arial", "B", 20)
-pdf.set_text_color(200, 0, 0)
+pdf.set_text_color(200, 0, 0)  # vermelho escuro para o título
 pdf.cell(190, 12, "ALCHEMISED", ln=1, align="C")
 
 pdf.set_font("Arial", "B", 14)
-pdf.set_text_color(255, 255, 255)
+pdf.set_text_color(255, 255, 255)  # branco para subtítulo
 pdf.cell(190, 10, "Cronograma de Leitura", ln=1, align="C")
 pdf.ln(10)
 
-pdf.set_text_color(255, 255, 255)
+pdf.set_text_color(255, 255, 255)  # branco para progresso geral
 pdf.cell(190, 10, f"Progresso Geral: {geral_concluidos}/{geral_total}", ln=1, align="C")
 
 # Partes
 for nome in partes.keys():
-    add_page_with_bg(pdf)
+    add_page_with_bg(pdf, "img/alchemised.png")
     pdf.set_font("Arial", "B", 16)
-    pdf.set_text_color(255, 255, 255)
+    pdf.set_text_color(255, 255, 255)  # branco para título da parte
     pdf.cell(190, 10, nome, ln=1, align="C")
     pdf.ln(5)
 
     pdf.set_font("Arial", "B", 16)
+    pdf.set_text_color(255, 255, 255)  # branco para cabeçalho da tabela
     pdf.cell(160, 10, "Leitura", border=1)
     pdf.cell(30, 10, "Status", border=1, align="C")
     pdf.ln()
 
     pdf.set_font("Arial", "B", 14)
+    pdf.set_text_color(255, 255, 255)  # branco para conteúdo da tabela
     for _, row in st.session_state[f"df_{nome}"].iterrows():
         status = "[X]" if row["Concluído"] else "[ ]"
         pdf.cell(160, 8, str(row["Leitura"])[:75], border=1)
         pdf.cell(30, 8, status, border=1, align="C")
         pdf.ln()
 
+# Carregar progresso salvo
+if os.path.exists("progresso.csv"):
+    todos_salvos = pd.read_csv("progresso.csv")
+else:
+    todos_salvos = None
+
 # Exportar PDF
 buffer = BytesIO()
-pdf_bytes = pdf.output(dest="S").encode("latin-1")
+pdf_bytes = pdf.output(dest="S").encode("latin-1")  # converte para bytes
 buffer.write(pdf_bytes)
 buffer.seek(0)
 
@@ -203,7 +201,7 @@ def add_bg_from_local(image_file):
         .stApp {{
             background: 
                 linear-gradient(
-                    rgba(255,255,255,0.4),
+                    rgba(255,255,255,0.4),   /* camada branca semi-transparente */
                     rgba(255,255,255,0.4)
                 ),
                 url("data:image/png;base64,{encoded}");
@@ -212,13 +210,11 @@ def add_bg_from_local(image_file):
             background-attachment: fixed;
         }}
         h1, h2, h3, p, label {{
-            color: black !important;
+            color: black !important;   /* texto preto para contraste */
             text-shadow: 1px 1px 4px white;
         }}
         </style>
         """,
         unsafe_allow_html=True
     )
-
-# Chamar a função DEPOIS de definir
-add_bg_from_local("img/alchemised_light.png")
+add_bg_from_local("img/alchemised.png")
