@@ -154,7 +154,8 @@ for nome in partes.keys():
 
 # Exportar PDF
 buffer = BytesIO()
-buffer.write(pdf.output(dest="S"))
+pdf_bytes = pdf.output(dest="S").encode("latin-1")  # converte para bytes
+buffer.write(pdf_bytes)
 buffer.seek(0)
 
 st.download_button(
