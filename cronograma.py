@@ -115,13 +115,15 @@ def add_page_with_bg(pdf, bg_path):
 pdf = FPDF()
 
 
-# Partes
-for nome in partes.keys():
-    add_page_with_bg(pdf, "img/alchemised.png")
-    pdf.set_font("Arial", "B", 16)
-    pdf.set_text_color(200, 0, 0)  # vermelho escuro para título da parte
-    pdf.cell(190, 10, nome, ln=1, align="C")
-    pdf.ln(5)
+def add_page_with_bg(pdf, bg_path):
+    pdf.add_page()
+    pdf.image(bg_path, x=0, y=0, w=210, h=297)  # fundo em cada página
+    
+    # camada clara para suavizar a imagem
+    pdf.set_fill_color(255, 255, 255)  # branco
+    pdf.set_alpha(0.3)  # transparência (se estiver usando fpdf2)
+    pdf.rect(0, 0, 210, 297, 'F')
+    pdf.set_alpha(1)  # volta ao normal para o texto
 
     pdf.set_font("Arial", "B", 14)
     pdf.set_text_color(255, 255, 255)  # branco para cabeçalho da tabela
