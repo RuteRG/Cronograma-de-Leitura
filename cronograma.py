@@ -220,5 +220,5 @@ def add_bg_from_local(image_file):
         unsafe_allow_html=True
     )
 
-# Chamar a função depois de clarear a imagem
+# Chamar a função DEPOIS de definir
 add_bg_from_local("img/alchemised_light.png")
