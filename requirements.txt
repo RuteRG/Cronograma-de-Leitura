@@ -1,4 +1,8 @@
 streamlit
 pandas
 fpdf
+<<<<<<< HEAD
 pillow
+=======
+pillow
+>>>>>>> f5e07bb8ac5f2965c424b9463436b6f9711d9be6
