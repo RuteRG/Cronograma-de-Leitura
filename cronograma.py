@@ -197,3 +197,28 @@ st.download_button(
 def add_bg_from_local(image_file):
     with open(image_file, "rb") as image:
         encoded = base64.b64encode(image.read()).decode()
+    st.markdown(
+        f"""
+        <style>
+        .stApp {{
+            background: 
+                linear-gradient(
+                    rgba(255,255,255,0.4),
+                    rgba(255,255,255,0.4)
+                ),
+                url("data:image/png;base64,{encoded}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }}
+        h1, h2, h3, p, label {{
+            color: black !important;
+            text-shadow: 1px 1px 4px white;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+# Chamar a função depois de clarear a imagem
+add_bg_from_local("img/alchemised_light.png")
