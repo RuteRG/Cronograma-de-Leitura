@@ -13,39 +13,39 @@ st.set_page_config(page_title="Cronograma de Leitura - ALCHEMISED 🧠", layout=
 # =========================
 
 parte1 = [
-    "22/06/2026 - Capítulo 01 a 03, páginas 11 até 41",
-    "23/06/2026 - Capítulo 03 a 05, páginas 42 até 76",
-    "24/06/2026 - Capítulo 05 a 08, páginas 77 até 110",
-    "25/06/2026 - Capítulo 08 a 12, páginas 111 até 157",
-    "26/06/2026 - Capítulo 12 a 14, páginas 158 até 188",
-    "27/06/2026 - Capítulo 14 a 18, páginas 189 até 224",
+    "06/06/2026 - Capítulo 01 a 03, páginas 11 até 41",
+    "07/06/2026 - Capítulo 03 a 05, páginas 42 até 76",
+    "08/06/2026 - Capítulo 05 a 08, páginas 77 até 110",
+    "09/06/2026 - Capítulo 08 a 12, páginas 111 até 157",
+    "10/06/2026 - Capítulo 12 a 14, páginas 158 até 188",
+    "11/06/2026 - Capítulo 14 a 18, páginas 189 até 224",
 ]
 
 parte2 = [
-    "06/06/2026 - Capítulo 22 a 25, páginas 267 até 304",
-    "07/06/2026 - Capítulo 25 a 29, páginas 305 até 341",
-    "08/06/2026 - Capítulo 29 a 32, páginas 342 até 370",
-    "09/06/2026 - Capítulo 32 a 35, páginas 371 até 409",
-    "10/06/2026 - Capítulo 35 a 39, páginas 410 até 442",
-    "11/06/2026 - Capítulo 39 a 43, páginas 443 até 476",
-    "12/06/2026 - Capítulo 43 a 46, páginas 477 até 510",
-    "13/06/2026 - Capítulo 46 a 48, páginas 511 até 540",
-    "14/06/2026 - Capítulo 48 a 50, páginas 541 até 576",
-    "15/06/2026 - Capítulo 50 a 51, páginas 577 até 601",
-    "16/06/2026 - Capítulo 51 a 53, páginas 602 até 629",
-    "17/06/2026 - Capítulo 53 a 56, páginas 630 até 660",
-    "18/06/2026 - Capítulo 56 a 59, páginas 661 até 687",
-    "19/06/2026 - Capítulo 59 a 61, páginas 688 até 715",
-    "20/06/2026 - Capítulo 61 a 64, páginas 716 até 759",
-    "21/06/2026 - Capítulo 64 a 65, páginas 760 até 795",
+    "11/06/2026 - Capítulo 22 a 25, páginas 267 até 304",
+    "12/06/2026 - Capítulo 25 a 29, páginas 305 até 341",
+    "13/06/2026 - Capítulo 29 a 32, páginas 342 até 370",
+    "14/06/2026 - Capítulo 32 a 35, páginas 371 até 409",
+    "15/06/2026 - Capítulo 35 a 39, páginas 410 até 442",
+    "16/06/2026 - Capítulo 39 a 43, páginas 443 até 476",
+    "17/06/2026 - Capítulo 43 a 46, páginas 477 até 510",
+    "18/06/2026 - Capítulo 46 a 48, páginas 511 até 540",
+    "19/06/2026 - Capítulo 48 a 50, páginas 541 até 576",
+    "20/06/2026 - Capítulo 50 a 51, páginas 577 até 601",
+    "21/06/2026 - Capítulo 51 a 53, páginas 602 até 629",
+    "22/06/2026 - Capítulo 53 a 56, páginas 630 até 660",
+    "23/06/2026 - Capítulo 56 a 59, páginas 661 até 687",
+    "24/06/2026 - Capítulo 59 a 61, páginas 688 até 715",
+    "25/06/2026 - Capítulo 61 a 64, páginas 716 até 759",
+    "26/06/2026 - Capítulo 64 a 65, páginas 760 até 795",
 ]
 
 parte3 = [
-    "28/06/2026 - Capítulo 66 a 69, páginas 799 até 831",
-    "29/06/2026 - Capítulo 69 a 72, páginas 832 até 867",
-    "30/06/2026 - Capítulo 72 a 75, páginas 868 até 900",
-    "01/07/2026 - Capítulo 75 a 77, páginas 901 até 928",
-    "02/07/2026 - Capítulo 77 a Epílogo, páginas 929 até 955",
+   "27/06/2026 - Capítulo 66 a 69, páginas 799 até 831",
+    "28/06/2026 - Capítulo 69 a 72, páginas 832 até 867",
+    "29/06/2026 - Capítulo 72 a 75, páginas 868 até 900",
+    "30/06/2026 - Capítulo 75 a 77, páginas 901 até 928",
+    "01/07/2026 - Capítulo 77 a Epílogo, páginas 929 até 955",
 ]
 
 partes = {
