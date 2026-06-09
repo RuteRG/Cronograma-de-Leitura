@@ -12,6 +12,15 @@ st.set_page_config(page_title="Cronograma de Leitura - ALCHEMISED 🧠", layout=
 # DADOS
 # =========================
 
+parte1 = [
+    "22/06/2026 - Capítulo 01 a 03, páginas 11 até 41",
+    "23/06/2026 - Capítulo 03 a 05, páginas 42 até 76",
+    "24/06/2026 - Capítulo 05 a 08, páginas 77 até 110",
+    "25/06/2026 - Capítulo 08 a 12, páginas 111 até 157",
+    "26/06/2026 - Capítulo 12 a 14, páginas 158 até 188",
+    "27/06/2026 - Capítulo 14 a 18, páginas 189 até 224",
+]
+
 parte2 = [
     "06/06/2026 - Capítulo 22 a 25, páginas 267 até 304",
     "07/06/2026 - Capítulo 25 a 29, páginas 305 até 341",
@@ -31,15 +40,6 @@ parte2 = [
     "21/06/2026 - Capítulo 64 a 65, páginas 760 até 795",
 ]
 
-parte1 = [
-    "22/06/2026 - Capítulo 01 a 03, páginas 11 até 41",
-    "23/06/2026 - Capítulo 03 a 05, páginas 42 até 76",
-    "24/06/2026 - Capítulo 05 a 08, páginas 77 até 110",
-    "25/06/2026 - Capítulo 08 a 12, páginas 111 até 157",
-    "26/06/2026 - Capítulo 12 a 14, páginas 158 até 188",
-    "27/06/2026 - Capítulo 14 a 18, páginas 189 até 224",
-]
-
 parte3 = [
     "28/06/2026 - Capítulo 66 a 69, páginas 799 até 831",
     "29/06/2026 - Capítulo 69 a 72, páginas 832 até 867",
@@ -49,8 +49,8 @@ parte3 = [
 ]
 
 partes = {
-    "Parte 2 (06/06 a 21/06)": parte2,
     "Parte 1 (22/06 a 27/06)": parte1,
+    "Parte 2 (06/06 a 21/06)": parte2,
     "Parte 3 (28/06 a 02/07)": parte3,
 }
 
